@@ -17,9 +17,17 @@ fn main() {
         eprintln!("Could not open or find the image");
         std::process::exit(-1);
     }
+    let mut buffer = Vec::new();
+    let tgt = rgb2grey(&mat, &mut buffer);
 
-    let tgt = rgb2grey(&mat);
-
-    highgui_named_window("Display window", WindowFlag::Autosize).unwrap();
-    mat.show("Display window", 0).unwrap();
+    match highgui_named_window("Display window", WindowFlag::Autosize) {
+        Err(err) => eprintln!("{}", err),
+        _ => {
+            match tgt.show("Display window", 0) {
+                Err(err) => eprintln!("{}", err),
+                _ => {}
+            }
+        }
+    }
+    std::mem::forget(tgt);
 }
