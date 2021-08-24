@@ -9,10 +9,10 @@ fn weight_mean_average(b: u16, g: u16, r: u16) -> u16 {
 pub fn rgb2grey(source: &Mat, buffer: &mut Vec<u8>) -> Mat {
     let img_type: cv::CvType = source.cv_type();
     match img_type {
-        Cv8UC1 | Cv8SC1 | Cv16UC1 | Cv16SC1 | Cv32SC1 | Cv32FC1 => {
+        Cv8UC1 | Cv8SC1 | Cv16UC1 | Cv16SC1 => {
             return Mat::from_buffer(source.rows, source.cols, img_type, source.data());
         }
-        Cv32SC3 | Cv32FC3 | Cv64FC3 | Cv8UC2 => {
+        Cv32SC3 | Cv32FC3 | Cv64FC3 | Cv8UC2 | Cv32SC1 | Cv32FC1 => {
             eprintln!("unsupported image type");
             std::process::exit(-1);
         }
