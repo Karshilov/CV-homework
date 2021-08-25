@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "tsc -p tsconfig.json && parcel index.html --port 5000"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}

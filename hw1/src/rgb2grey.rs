@@ -6,6 +6,7 @@ fn weight_mean_average(b: u16, g: u16, r: u16) -> u16 {
     return ((0.3 * r as f64 + 0.59 * g as f64 + 0.11 * b as f64) as f64) as u16;
 }
 
+#[no_mangle]
 pub fn rgb2grey(source: &Mat, buffer: &mut Vec<u8>) -> Mat {
     let img_type: cv::CvType = source.cv_type();
     match img_type {
@@ -51,6 +52,6 @@ pub fn rgb2grey(source: &Mat, buffer: &mut Vec<u8>) -> Mat {
         Cv16SC3 => Cv16SC1,
         _ => Cv8UC1,
     };
-    // println!("{} {}", buffer.len(), data.len());
+    println!("{} {} {}", data[0], data[1], data[2]);
     return Mat::from_buffer(source.rows, source.cols, target_type, &buffer[..]);
 }
