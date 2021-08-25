@@ -7,6 +7,21 @@ fn weight_mean_average(b: u16, g: u16, r: u16) -> u16 {
 }
 
 #[no_mangle]
+pub fn wasm_rgb2grey(data: &[u8], buffer: &mut Vec<u8>) {
+    for i in 0..data.len() {
+        match i % 4 {
+            0 => {
+                let result =
+                    weight_mean_average(data[i + 2] as u16, data[i + 1] as u16, data[i] as u16);
+                for _ in 0..3 { buffer.push(result as u8); }
+                buffer.push(data[i + 3]);
+            }
+            _ => {}
+        }
+    }
+}
+
+#[no_mangle]
 pub fn rgb2grey(source: &Mat, buffer: &mut Vec<u8>) -> Mat {
     let img_type: cv::CvType = source.cv_type();
     match img_type {
